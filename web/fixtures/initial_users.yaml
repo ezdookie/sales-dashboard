@@ -1,0 +1,10 @@
+- model: core.PUUser
+  pk: 2
+  fields:
+    username: ezdookie
+    password: 123456
+    first_name: Brian
+    last_name: Quispe
+    email: brian@bleax.com
+    is_staff: True
+    is_superuser: True

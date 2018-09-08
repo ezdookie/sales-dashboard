@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li>
+        <a href="{% url 'services:list' 'hosting' %}">
+          Cuentas de Hosting
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'services:hosting-details' obj_cservice.id %}">
+          {{ obj_cservice.data.name }}
+        </a>
+      </li>
+      <li class="is-active">
+        <a href="#">
+          Nuevo Usuario
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="columns">
+      <div class="column is-one-third">
+        <div class="field">
+          <label class="label" for="{{ form.full_name.id_for_label }}">{{ form.full_name.label }}</label>
+          <div class="control">
+            <input class="input" type="text" id="id_full_name" name="full_name" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+        </div>
+
+        <div class="field has-addons">
+          <div class="control">
+            <input class="input" type="text" id="id_username" name="username" required>
+          </div>
+          <div class="control">
+            <a class="button is-static">
+              @{{ obj_cservice.data.name }}
+            </a>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+          <div class="control">
+            <input class="input" type="text" id="id_password" name="password" required>
+          </div>
+        </div>
+
+        <input type="submit" value="Crear usuario" class="button is-primary is-medium">
+      </div>
+    </div>
+
+  </form>
+{% endblock %}

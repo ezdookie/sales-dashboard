@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li>
+        <a href="{% url 'services:list' 'hosting' %}">
+          Cuentas de Hosting
+        </a>
+      </li>
+      <li class="is-active">
+        <a href="#">
+          {{ obj_cservice.data.name }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="table-responsive">
+    <table class="table is-striped is-fullwidth">
+      <thead>
+        <tr>
+          <th>Nombre completo</th>
+          <th>Dirección e-mail</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in obj_cservice.hostingusers.all %}
+        <tr>
+          <td>{{ user.full_name }}</td>
+          <td>{{ user.username }}@{{ obj_cservice.data.name }}</td>
+          <td><a href="{% url 'services:hosting-delete-user' obj_cservice.id user.id %}"><span class="icon"><i class="fas fa-trash"></i></span></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div>
+      <a href="{% url 'services:hosting-create-user' obj_cservice.id %}" class="button is-link">
+        <span class="icon"><i class="fas fa-plus-circle"></i></span> <span>Nuevo usuario</span>
+      </a>
+    </div>
+  </div>
+{% endblock %}

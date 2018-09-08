@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h2 class="title is-4">Cuentas de Hosting</h2>
+
+  <div class="table-responsive">
+    <table class="table is-striped is-fullwidth">
+      <thead>
+        <tr>
+          <th>Dominio</th>
+          <th>Plan del Servicio</th>
+          <th>Acceso FTP</th>
+          <th>Capacidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for service in obj_services %}
+        <tr>
+          <td><a href="{% url 'services:hosting-details' service.id %}">{{ service.data.name }}</a></td>
+          <td>{{ service.service.name }}</td>
+          <td>
+            <div id="access-{{ service.id }}" class="modal">
+              <div class="modal-background"></div>
+              <div class="modal-content">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">{{ service.data.name }}</p>
+                  <a href="#" class="delete" aria-label="close"></a>
+                </header>
+                <section class="modal-card-body">
+                  <p><b>FTP Server:</b> ftp.{{ service.data.name }}</p>
+                  <p><b>FTP Port:</b> 22</p>
+                  <p><b>Username:</b> {{ service.data.username }}</p>
+                  <p><b>Password:</b> {{ service.data.password }}</p>
+                </section>
+              </div>
+            </div>
+
+            <a class="button" data-toggle="modal" href="#access-{{ service.id }}">
+              Ver datos de acceso
+            </a>
+          </td>
+          <td>
+            {% widthratio service.data.server_block_quota_used service.data.server_block_quota 100 as usage_percent %}
+            <progress class="progress is-primary" value="{{ usage_percent }}" max="100"></progress>
+            {{ service.data.server_quota_used }} / {{ service.data.server_quota }} ({{ usage_percent }}%)
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

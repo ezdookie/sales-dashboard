@@ -1,0 +1,8 @@
+django==2.0
+psycopg2-binary==2.7.5
+enum34==1.1.6
+pyyaml==3.12
+django-rq==1.1.0
+requests==2.19.1
+python-dateutil==2.7.3
+django-guardian==1.4.9

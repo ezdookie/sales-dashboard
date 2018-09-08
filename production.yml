@@ -1,0 +1,40 @@
+db:
+  restart: always
+  extends:
+    file: common-services.yml
+    service: common_postgres_db
+  volumes:
+    - ./pgdata:/var/lib/postgresql/data/pgdata
+
+redis:
+  restart: always
+  image: redis:latest
+  volumes:
+    - ./rddata:/data
+
+web:
+  restart: always
+  build: ./web
+  command: ["./wait-for-it.sh", "db:5432", "--",
+    "python", "manage.py", "runserver", "0.0.0.0:8000"]
+  volumes:
+    - ./web:/app
+  ports:
+    - "8666:8000"
+  links:
+    - db
+    - redis
+  env_file:
+    - vars-prod.env
+
+worker:
+  restart: always
+  build: ./web
+  command: ["python", "manage.py", "rqworker", "default"]
+  volumes:
+    - ./web:/app
+  links:
+    - db
+    - redis
+  env_file:
+    - vars-prod.env

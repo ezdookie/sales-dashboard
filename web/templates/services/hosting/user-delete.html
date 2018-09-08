@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li>
+        <a href="{% url 'services:list' 'hosting' %}">
+          Cuentas de Hosting
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'services:hosting-details' object.cservice.id %}">
+          {{ object.cservice.data.name }}
+        </a>
+      </li>
+      <li class="is-active">
+        <a href="#">
+          Eliminar Usuario
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <form method="post">
+    {% csrf_token %}
+    <h2 class="subtitle">¿Estás seguro que deseas eliminar <b>{{ object }}</b>?</h2>
+    <input type="submit" value="Eliminar" class="button is-danger">
+  </form>
+{% endblock %}

@@ -1,0 +1,37 @@
+<header>
+  <nav class="navbar" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          <h1 class="title">Pukutay Dashboard</h1>
+        </a>
+    
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          {% if user.is_authenticated %}
+            <a class="navbar-item" href="{% url 'sales:subscription-list' %}">
+              Suscripciones
+            </a>
+            <a class="navbar-item" href="{% url 'services:list' 'hosting' %}">
+              Hosting
+            </a>
+            <a class="navbar-item" href="{% url 'logout' %}">
+              Logout
+            </a>
+          {% else %}
+            <a class="navbar-item" href="{% url 'login' %}">
+              Identificarse
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

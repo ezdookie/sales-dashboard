@@ -1,0 +1,4 @@
+common_postgres_db:
+  image: postgres:9.6
+  environment:
+    PGDATA: /var/lib/postgresql/data/pgdata

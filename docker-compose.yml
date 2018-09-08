@@ -1,0 +1,36 @@
+db:
+  extends:
+    file: common-services.yml
+    service: common_postgres_db
+  volumes:
+    - ./pgdata:/var/lib/postgresql/data/pgdata
+
+redis:
+  image: redis:latest
+  volumes:
+    - ./rddata:/data
+
+web:
+  build: ./web
+  command: ["./wait-for-it.sh", "db:5432", "--",
+    "python", "manage.py", "runserver", "0.0.0.0:8000"]
+  volumes:
+    - ./web:/app
+  ports:
+    - "80:8000"
+  links:
+    - db
+    - redis
+  env_file:
+    - vars-dev.env
+
+worker:
+  build: ./web
+  command: ["python", "manage.py", "rqworker", "default"]
+  volumes:
+    - ./web:/app
+  links:
+    - db
+    - redis
+  env_file:
+    - vars-dev.env

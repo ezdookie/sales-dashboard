@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li>
+        <a href="{% url 'sales:subscription-list' %}">
+          Suscripciones
+        </a>
+      </li>
+      <li class="is-active">
+        <a href="#">
+          Nueva suscripción
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="columns">
+      <div class="column is-one-third">
+        <div class="field">
+          <label class="label" for="{{ form.service.id_for_label }}">{{ form.service.label }}</label>
+
+          <div class="control">
+            <div class="select">
+              <select id="id_service" name="service" required>
+                {% for x, y in form.fields.service.choices %}
+                  <option value="{{ x }}">{{ y }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="{{ form.domain_name.id_for_label }}">{{ form.domain_name.label }}</label>
+          <div class="control">
+            <input class="input" type="text" id="id_domain_name" name="domain_name" required>
+          </div>
+        </div>
+
+        <input type="submit" value="Crear suscripción" class="button is-primary is-medium">
+      </div>
+    </div>
+  </form>
+{% endblock %}

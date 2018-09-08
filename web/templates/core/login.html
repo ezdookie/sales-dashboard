@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h2 class="title is-4 has-text-centered">Login</h2>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="columns is-centered">
+      <div class="column is-one-third">
+        <div class="field">
+          <label class="label" for="{{ login_form.email.id_for_label }}">{{ login_form.email.label }}</label>
+          <div class="control">
+            <input class="input" type="text" id="id_email" name="email">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="{{ login_form.password.id_for_label }}">{{ login_form.password.label }}</label>
+          <div class="control">
+            <input class="input" type="password" id="id_password" name="password">
+          </div>
+        </div>
+
+        <div class="has-text-centered">
+          <input type="submit" value="Login" class="button is-primary is-medium">
+        </div>
+      </div>
+    </div>
+  </form>
+{% endblock %}

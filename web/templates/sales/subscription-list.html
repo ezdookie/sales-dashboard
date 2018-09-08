@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h2 class="title is-4">Suscripciones</h2>
+
+  <table class="table is-striped is-fullwidth">
+    <thead>
+      <tr>
+        <th>Servicio</th>
+        <th>Fecha de suscripción</th>
+        <th>Fecha de renovación</th>
+        <th>Fecha de vencimiento</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for obj_subscription in obj_subscriptions %}
+      <tr>
+        {% if obj_subscription.status_id == 1 %}
+          <td>{{ obj_subscription.service.name }}</td>
+          <td colspan="4"><b>En proceso de creación...</b></td>
+        {% else %}
+          <td>{{ obj_subscription.service.name }}</td>
+          <td>{{ obj_subscription.register_date|date:"d/m/Y" }}</td>
+          <td>{{ obj_subscription.renewal_date|date:"d/m/Y" }}</td>
+          <td>{{ obj_subscription.expiration_date|date:"d/m/Y" }}</td>
+          <td>
+            <a href="{{ obj_subscription.get_cservice_link }}">
+              {{ obj_subscription.cservice.data.name }}
+            </a>
+          </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div>
+    <a href="{% url 'sales:subscription-create' %}" class="button is-link">
+      <span class="icon"><i class="fas fa-plus-circle"></i></span> <span>Nueva suscripción</span>
+    </a>
+  </div>
+{% endblock %}

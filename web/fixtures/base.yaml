@@ -1,0 +1,27 @@
+# Category Service
+
+- model: services.PUCategoryService
+  pk: 1
+  fields:
+    name: Hosting
+    slug: hosting
+
+# Service Status
+
+- model: sales.PUSubscriptionStatus
+  pk: 1
+  fields:
+    name: Pendiente
+    slug: pending
+
+- model: sales.PUSubscriptionStatus
+  pk: 2
+  fields:
+    name: Active
+    slug: active
+
+- model: sales.PUSubscriptionStatus
+  pk: 3
+  fields:
+    name: Suspended
+    slug: suspended
